@@ -123,7 +123,6 @@ for filename in os.listdir('./Cogs'):
     if filename.endswith(".py"):
         client.load_extension(f"Cogs.{filename[:-3]}")
 
-
 # Runs client, token pulled from discord.com/developers
 token = os.environ.get("token")
 client.run(token)
