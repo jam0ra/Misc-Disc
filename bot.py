@@ -12,7 +12,7 @@ client = commands.Bot(command_prefix='!')
 @client.event
 # Runs once bot is ready
 async def on_ready():
-    await client.change_presence(status=discord.Status.online, activity=discord.Game("Hello! ^_^"))
+    await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="for commands"))
     print("Bot is ready!")
 
 @client.event
