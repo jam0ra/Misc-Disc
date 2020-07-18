@@ -2,11 +2,14 @@ import discord
 import os
 from random import choice
 from discord.ext import commands, tasks
+from itertools import cycle
 
 # @TODO: Add exception handling.
+# @TODO: Create cogs based on roles
 
 # Sets command pre-fix ie: !ping
 client = commands.Bot(command_prefix='!')
+status = cycle(["for commands", "for instructions", "for pings"])
 
 # Event
 @client.event
@@ -22,6 +25,10 @@ async def on_member_join(member):
 @client.event
 async def on_member_remove(member):
     print(f"{member} has been removed.")
+
+@tasks.loop(seconds=10)
+async def change_status():
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=next(status)))
 
 @client.command()
 async def ping(context):
