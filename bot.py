@@ -15,7 +15,8 @@ status = cycle(["for commands", "for instructions", "for pings"])
 @client.event
 # Runs once bot is ready
 async def on_ready():
-    await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="for commands"))
+    change_status.start()
+    await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=next(status)))
     print("Bot is ready!")
 
 @client.event
@@ -26,7 +27,7 @@ async def on_member_join(member):
 async def on_member_remove(member):
     print(f"{member} has been removed.")
 
-@tasks.loop(seconds=10)
+@tasks.loop(seconds=600)
 async def change_status():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=next(status)))
 
