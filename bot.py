@@ -27,6 +27,14 @@ async def on_member_join(member):
 async def on_member_remove(member):
     print(f"{member} has been removed.")
 
+@client.event
+async def on_command_error(context, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        pass
+    elif isinstance(error, commands.CommandNotFound):
+        pass
+    await context.send(error)
+
 @tasks.loop(seconds=600)
 async def change_status():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=next(status)))
@@ -70,7 +78,7 @@ async def _8ball(context, *, question):
     await context.send(f"Question: {question}\nAnswer: {choice(responses)}")
 
 @client.command()
-async def clear(context, amount=5):
+async def clear(context, amount):
     if amount > 0:
         await context.channel.purge(limit=amount)
     else:
@@ -106,6 +114,10 @@ async def unban(context, *, member):
             await context.guild.unban(user)
             await context.send(f'{user.mention} was unbanned from the server.')
             break
+
+@clear.error
+async def clear_error(context, error):
+    await context.send("Please specify the amount of messages to delete.")
 
 ######################## Cog Commands ############################
 
