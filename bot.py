@@ -147,4 +147,4 @@ for filename in os.listdir('./Cogs'):
 
 # Runs client, token pulled from discord.com/developers
 token = os.environ.get("token")
-client.run("NzMzNTIxMjgyOTAxMjEzMzE1.XxEW7g.DHSFsvppOHBr1PDCmX-xL_TiFuc")
+client.run(token)
